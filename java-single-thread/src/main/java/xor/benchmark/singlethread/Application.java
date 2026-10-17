@@ -3,6 +3,7 @@ package xor.benchmark.singlethread;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.nio.charset.StandardCharsets;
 
 public class Application {
 
@@ -11,19 +12,21 @@ public class Application {
             throw new IllegalArgumentException("key is needed");
         }
 
-        final byte[] key = args[0].getBytes();
+        final byte[] key = args[0].getBytes(StandardCharsets.UTF_8);
 
         final InputStream in = System.in;
         final OutputStream out = System.out;
 
         final byte[] buf = new byte[8 * 1024];
-        int totalRead = 0;
+        int keyIndex = 0;
         int nRead;
-        while ((nRead = in.read(buf, 0, buf.length)) > 0) {
+        while ((nRead = in.read(buf, 0, buf.length)) != -1) {
             for (int i = 0; i < nRead; i++) {
-                buf[i] = (byte) (buf[i] ^ key[ totalRead % key.length]);
+                buf[i] ^= key[ keyIndex];
+                if (++keyIndex == key.length) {
+                    keyIndex = 0;
+                }
             }
-            totalRead += nRead;
             out.write(buf, 0, nRead);
         }
     }
