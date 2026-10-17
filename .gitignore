@@ -1,4 +1,3 @@
-.gradle
 **/build/
 !**/src/**/build/
 
@@ -7,4 +6,10 @@
 
 # IDEA generated files
 .idea/
+
+# Gradle related files
+gradlew
+gradlew.bat
+.gradle/
+gradle/
 
