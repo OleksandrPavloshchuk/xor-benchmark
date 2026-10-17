@@ -1,0 +1,26 @@
+tasks.register('compileNative', Exec) {
+    inputs.files(fileTree('src'))
+    outputs.file(layout.buildDirectory.file('main'))
+
+    commandLine(
+            'g++',
+            '-O3',
+            '-std=c++23',
+            'src/main.cpp',
+            '-o',
+            layout.buildDirectory.file('main').get().asFile
+    )
+}
+tasks.register('runNative', Exec) {
+    dependsOn 'compileNative'
+
+    executable layout.buildDirectory
+            .file('main')
+            .get()
+            .asFile
+
+    /*
+    args 'monkey'
+    standardInput = file('../data/input.bin').newInputStream()
+     */
+}
