@@ -2,3 +2,4 @@ rootProject.name = 'xor-benchmark'
 
 include 'java'
 include 'c++'
+include 'node'
