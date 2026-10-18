@@ -1,0 +1,18 @@
+tasks.register('compileNative', Exec) {
+    def outputFile = layout.buildDirectory.file('xor-benchmark').get().asFile
+    def inputFile = layout.projectDirectory.file('src/main.go').asFile
+
+    doFirst {
+        outputFile.parentFile.mkdirs()
+    }
+
+    workingDir projectDir
+
+    commandLine(
+            '/usr/local/go/bin/go',
+            'build',
+            '-o',
+            outputFile.absolutePath,
+            inputFile.absolutePath
+    )
+}
