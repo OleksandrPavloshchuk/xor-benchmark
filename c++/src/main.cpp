@@ -23,7 +23,7 @@
         const char *key = argv[1];
         const int keyLen = strlen(key);
 
-        while((nRead = read(IN, buf, sizeof(buf))) != NULL) {
+        while((nRead = read(IN, buf, sizeof(buf))) > NULL) {
             for (int i = 0; i < nRead; i++) {
                 buf[i] ^= key[keyIndex];
                 if (++keyIndex == keyLen) {
